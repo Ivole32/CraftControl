@@ -9,7 +9,6 @@ for name in mido.get_input_names():
     print(f"{str(option_number)}) {name}")
     options[str(option_number)] = name
 
-print(options)
 PORT_NAME = options[input("Choose MIDI Number: ")]
 
 
