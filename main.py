@@ -31,17 +31,12 @@ with open("config.json", "r") as file:
 
 for bind in config["bindings"]:
     msg_type = bind.get("msg_type")
-    print(msg_type)
     key = bind.get("key")
-    print(key)
     channel = bind.get("channel")
-    print(channel)
     value = bind.get("value")
-    print(value)
     action = bind.get("action")
-    print(action)
-    print("\n")
 
+    print(f"Registerd binding:\n    msg_type: {msg_type}, key: {key}, channel: {channel}, value: {value}, action: {action}")
     router.register(msg_type, key, channel, value, lambda _msg, action=action: press_key(action))
 
 print("Listening...")
