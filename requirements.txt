@@ -1,0 +1,3 @@
+mido>=1.3.3
+python-rtmidi>=1.5.8
+keyboard>=0.13.5
