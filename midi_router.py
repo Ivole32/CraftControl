@@ -4,11 +4,11 @@ class MidiRouter:
     def __init__(self):
         self.routes = {}
 
-    def register(self, msg_type, key, value, func):
+    def register(self, msg_type, key, channel, value, func):
         if not value:
-            self.routes[(msg_type, key)] = func
+            self.routes[(msg_type, key, channel)] = func
         else:
-            self.routes[(msg_type, key, value)] = func 
+            self.routes[(msg_type, key, channel, value)] = func 
 
     def handle(self, msg):
         key = None
@@ -23,7 +23,9 @@ class MidiRouter:
         except:
             value = msg.velocity
 
-        route = self.routes.get((msg.type, key)) or self.routes.get((msg.type, key, value))
+        channel = msg.channel
+
+        route = self.routes.get((msg.type, key, channel)) or self.routes.get((msg.type, key, channel, value))
         if route:
             function = route(msg)
-            asyncio.create_task(function)
+            asyncio.create_task(function)   

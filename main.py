@@ -25,9 +25,13 @@ async def press_key(key: str) -> None:
     await asyncio.sleep(0.1)
     keyboard.release(key)
 
-router.register('control_change', 33, 63, lambda key: press_key("s"))
-router.register('control_change', 33, 65, lambda key: press_key("w"))
-router.register('note_on', 65, 127, lambda key: press_key("space"))
+router.register('control_change', 33, 0, 63, lambda key: press_key("s"))
+router.register('control_change', 33, 0, 65, lambda key: press_key("w"))
+
+router.register('control_change', 33, 1, 63, lambda key: press_key("d"))
+router.register('control_change', 33, 1, 65, lambda key: press_key("a"))
+
+router.register('note_on', 65, 6, 127, lambda key: press_key("space"))
 print("Listening...")
 
 async def main():
