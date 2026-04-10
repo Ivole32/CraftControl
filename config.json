@@ -1,0 +1,39 @@
+{
+    "bindings": [
+        {
+            "msg_type": "control_change",
+            "key": 33,
+            "channel": 0,
+            "value": 63,
+            "action": "s"
+        },
+        {
+            "msg_type": "control_change",
+            "key": 33,
+            "channel": 0,
+            "value": 65,
+            "action": "w"
+        },    
+        {
+            "msg_type": "control_change",
+            "key": 33,
+            "channel": 1,
+            "value": 63,
+            "action": "d"
+        },
+        {
+            "msg_type": "control_change",
+            "key": 33,
+            "channel": 1,
+            "value": 65,
+            "action": "a"
+        },
+        {
+            "msg_type": "note_on",
+            "key": 65,
+            "channel": 6,
+            "value": 127,
+            "action": "space"
+        }
+    ]
+}

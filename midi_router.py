@@ -5,7 +5,7 @@ class MidiRouter:
         self.routes = {}
 
     def register(self, msg_type, key, channel, value, func):
-        if not value:
+        if value == None:
             self.routes[(msg_type, key, channel)] = func
         else:
             self.routes[(msg_type, key, channel, value)] = func 

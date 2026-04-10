@@ -1,5 +1,6 @@
 from midi_router import MidiRouter
 import mido
+import json
 import keyboard
 import asyncio
 
@@ -25,13 +26,24 @@ async def press_key(key: str) -> None:
     await asyncio.sleep(0.1)
     keyboard.release(key)
 
-router.register('control_change', 33, 0, 63, lambda key: press_key("s"))
-router.register('control_change', 33, 0, 65, lambda key: press_key("w"))
+with open("config.json", "r") as file:
+    config = json.load(file)
 
-router.register('control_change', 33, 1, 63, lambda key: press_key("d"))
-router.register('control_change', 33, 1, 65, lambda key: press_key("a"))
+for bind in config["bindings"]:
+    msg_type = bind.get("msg_type")
+    print(msg_type)
+    key = bind.get("key")
+    print(key)
+    channel = bind.get("channel")
+    print(channel)
+    value = bind.get("value")
+    print(value)
+    action = bind.get("action")
+    print(action)
+    print("\n")
 
-router.register('note_on', 65, 6, 127, lambda key: press_key("space"))
+    router.register(msg_type, key, channel, value, lambda _msg, action=action: press_key(action))
+
 print("Listening...")
 
 async def main():
