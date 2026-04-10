@@ -19,13 +19,15 @@ device = choose_device()
 port = mido.open_input(device)
 router = MidiRouter()
 
-async def a(msg):
-    print("a")
-    keyboard.press("a")
+async def press_key(key: str) -> None:
+    print(key)
+    keyboard.press(key)
     await asyncio.sleep(0.1)
-    keyboard.release("a")
+    keyboard.release(key)
 
-router.register('control_change', 33, a)
+router.register('control_change', 33, 63, lambda key: press_key("s"))
+router.register('control_change', 33, 65, lambda key: press_key("w"))
+router.register('note_on', 65, 127, lambda key: press_key("space"))
 print("Listening...")
 
 async def main():
