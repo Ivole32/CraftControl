@@ -34,6 +34,97 @@
             "channel": 6,
             "value": 127,
             "action": "space"
+        },
+        {
+            "msg_type": "note_on",
+            "key": 0,
+            "channel": 7,
+            "value": 127,
+            "action": "1"
+        },
+        {
+            "msg_type": "note_on",
+            "key": 1,
+            "channel": 7,
+            "value": 127,
+            "action": "2"
+        },
+        {
+            "msg_type": "note_on",
+            "key": 2,
+            "channel": 7,
+            "value": 127,
+            "action": "3"
+        },
+        {
+            "msg_type": "note_on",
+            "key": 3,
+            "channel": 7,
+            "value": 127,
+            "action": "4"
+        },
+        {
+            "msg_type": "note_on",
+            "key": 4,
+            "channel": 7,
+            "value": 127,
+            "action": "5"
+        },
+        {
+            "msg_type": "note_on",
+            "key": 5,
+            "channel": 7,
+            "value": 127,
+            "action": "6"
+        },
+        {
+            "msg_type": "note_on",
+            "key": 6,
+            "channel": 7,
+            "value": 127,
+            "action": "7"
+        },
+        {
+            "msg_type": "note_on",
+            "key": 7,
+            "channel": 7,
+            "value": 127,
+            "action": "8"
+        },
+        {
+            "msg_type": "note_on",
+            "key": 8,
+            "channel": 7,
+            "value": 127,
+            "action": "9"
+        },
+        {
+            "msg_type": "note_on",
+            "key": 70,
+            "channel": 6,
+            "value": 127,
+            "action": "e"
+        },
+        {
+            "msg_type": "note_on",
+            "key": 71,
+            "channel": 6,
+            "value": 127,
+            "action": "f"
+        },
+        {
+            "msg_type": "note_on",
+            "key": 88,
+            "channel": 0,
+            "value": 127,
+            "action": "t"
+        },
+        {
+            "msg_type": "note_on",
+            "key": 16,
+            "channel": 0,
+            "value": 127, 
+            "action": "esc"
         }
     ]
 }

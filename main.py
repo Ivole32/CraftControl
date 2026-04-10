@@ -30,14 +30,17 @@ with open("config.json", "r") as file:
     config = json.load(file)
 
 for bind in config["bindings"]:
-    msg_type = bind.get("msg_type")
-    key = bind.get("key")
-    channel = bind.get("channel")
-    value = bind.get("value")
-    action = bind.get("action")
+    try:
+        msg_type = bind.get("msg_type")
+        key = bind.get("key")
+        channel = bind.get("channel")
+        value = bind.get("value")
+        action = bind.get("action")
 
-    print(f"Registerd binding:\n    msg_type: {msg_type}, key: {key}, channel: {channel}, value: {value}, action: {action}")
-    router.register(msg_type, key, channel, value, lambda _msg, action=action: press_key(action))
+        print(f"Registerd binding:\n    msg_type: {msg_type}, key: {key}, channel: {channel}, value: {value}, action: {action}")
+        router.register(msg_type, key, channel, value, lambda _msg, action=action: press_key(action))
+    except Exception as e:
+        print(f"Could not register binding: {e}")
 
 print("Listening...")
 
