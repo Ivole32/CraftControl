@@ -1,9 +1,6 @@
-# CraftControl
-A simple Python MIDI monitor for using DDJ-FLEX4 as alternative input devices for Minecraft.
+# CraftControl - MIDI to Keyboard/Mouse Mapper
 
-## How it works
-### Controller input
-The input is captured with mido and forwarded by pynput. In the future there will be  a cnfigurable system that adapts to your needs.
+A powerful and flexible MIDI controller mapping system that converts MIDI inputs from DJ controllers (like the DDJ FLEX4) into keyboard shortcuts and mouse movements. Perfect for controlling games, software, or any application with your DJ controller!
 
 ## 💬 Support
 
