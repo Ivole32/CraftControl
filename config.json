@@ -1,5 +1,5 @@
 {
-    "bindings": [
+    "keyboard_bindings": [
         {
             "msg_type": "control_change",
             "key": 33,
@@ -125,6 +125,26 @@
             "channel": 0,
             "value": 127, 
             "action": "esc"
+        }
+    ],
+    "mouse_bindings": [
+        {
+            "msg_type": "control_change",
+            "keys": [51, 19],
+            "channel": 0,
+            "action": "mouse_x"
+        },
+        {
+            "msg_type": "control_change",
+            "keys": [51, 19],
+            "channel": 1,
+            "action": "mouse_y"
+        },
+        {
+            "msg_type": "control_change",
+            "keys": [37, 5],
+            "channel": 6,
+            "action": "mouse_y"
         }
     ]
 }
