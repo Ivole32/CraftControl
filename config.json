@@ -121,6 +121,13 @@
         },
         {
             "msg_type": "note_on",
+            "key": 0,
+            "channel": 6,
+            "value": 127,
+            "action": "q"
+        },
+        {
+            "msg_type": "note_on",
             "key": 16,
             "channel": 0,
             "value": 127, 
@@ -132,19 +139,55 @@
             "msg_type": "control_change",
             "keys": [51, 19],
             "channel": 0,
-            "action": "mouse_x"
+            "action": "mouse_move_x"
         },
         {
             "msg_type": "control_change",
             "keys": [51, 19],
             "channel": 1,
-            "action": "mouse_y"
+            "action": "mouse_move_y"
         },
         {
-            "msg_type": "control_change",
-            "keys": [37, 5],
+            "msg_type": "note_on",
+            "keys": [84, 84],
+            "channel": 0,
+            "value": 127,
+            "action": "mouse_click_left"
+        },
+        {
+            "msg_type": "note_on",
+            "keys": [84, 84],
+            "channel": 0,
+            "value": 0,
+            "action": "mouse_release_left"
+        },
+        {
+            "msg_type": "note_on",
+            "keys": [84, 84],
+            "channel": 1,
+            "value": 127,
+            "action": "mouse_click_right"
+        },
+        {
+            "msg_type": "note_on",
+            "keys": [84, 84],
+            "channel": 1,
+            "value": 0,
+            "action": "mouse_release_right"
+        },
+        {
+            "msg_type": "note_on",
+            "keys": [99, 99],
             "channel": 6,
-            "action": "mouse_y"
+            "value": 127,
+            "action": "mouse_click_middle"
+        },
+        {
+            "msg_type": "note_on",
+            "keys": [99, 99],
+            "channel": 6,
+            "value": 0,
+            "action": "mouse_release_middle"
         }
     ]
 }

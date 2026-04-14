@@ -41,7 +41,31 @@ sens = sensitivityMod * 8
 x_fader_screen_ratio = 16383 / screen_width
 y_fader_screen_ratio = 16383 / screen_height
 
-async def perform_mouse_action(action: str, fader_position: tuple):
+async def perform_mouse_click_action(action: str):
+    if action == "mouse_click_left":
+        function = lambda: pyautogui.mouseDown(button="left")
+    if action == "mouse_release_left":
+        function = lambda: pyautogui.mouseUp(button="left")
+    if action == "mouse_click_right":
+        function = lambda: pyautogui.mouseDown(button="right")
+    if action == "mouse_release_right":
+        function = lambda: pyautogui.mouseUp(button="right")
+    if action == "mouse_click_middle":
+        function = lambda: pyautogui.mouseUp(button="middle")
+        function = lambda: pyautogui.click(button="middle")
+    if action == "mouse_release_middle":
+        function = lambda: pyautogui.mouseUp(button="middle")
+        function = lambda: pyautogui.click(button="middle")
+    else:
+        return
+
+    loop = asyncio.get_running_loop()
+    await loop.run_in_executor(
+        None,
+        function
+    )
+
+async def perform_mouse_movement_action(action: str, fader_position: tuple):
     global x_position
     global y_position
     global last_x_position
@@ -51,9 +75,9 @@ async def perform_mouse_action(action: str, fader_position: tuple):
     lsb = fader_position[1]
     fader_value = (msb << 7) | lsb
 
-    if action == "mouse_x":
+    if action == "mouse_move_x":
         x_position = fader_value / x_fader_screen_ratio
-    elif action == "mouse_y":
+    elif action == "mouse_move_y":
         y_position = fader_value / y_fader_screen_ratio
     else:
         return
@@ -88,10 +112,14 @@ for bind in config["mouse_bindings"]:
         msg_type = bind.get("msg_type")
         keys = bind.get("keys")
         channel = bind.get("channel")
+        value = bind.get("value")
         action = bind.get("action")
 
         print(f"Registerd mouse binding:\n    msg_type: {msg_type}, keys: {keys}, channel: {channel}, action: {action}")
-        router.register_mouse_binding(msg_type, keys, channel, action, perform_mouse_action)
+        if action.startswith("mouse_move"):
+            router.register_mouse_binding(msg_type, keys, channel, None, action, perform_mouse_movement_action)
+        else:
+            router.register_mouse_binding(msg_type, keys, channel, value, action, perform_mouse_click_action)
     except Exception as e:
         print(f"Could not register mouse binding: {e}")
 
