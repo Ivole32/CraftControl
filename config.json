@@ -181,13 +181,6 @@
             "channel": 6,
             "value": 127,
             "action": "mouse_click_middle"
-        },
-        {
-            "msg_type": "note_on",
-            "keys": [99, 99],
-            "channel": 6,
-            "value": 0,
-            "action": "mouse_release_middle"
         }
     ]
 }

@@ -51,10 +51,6 @@ async def perform_mouse_click_action(action: str):
     if action == "mouse_release_right":
         function = lambda: pyautogui.mouseUp(button="right")
     if action == "mouse_click_middle":
-        function = lambda: pyautogui.mouseUp(button="middle")
-        function = lambda: pyautogui.click(button="middle")
-    if action == "mouse_release_middle":
-        function = lambda: pyautogui.mouseUp(button="middle")
         function = lambda: pyautogui.click(button="middle")
     else:
         return
