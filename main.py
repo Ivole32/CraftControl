@@ -44,13 +44,13 @@ y_fader_screen_ratio = 16383 / screen_height
 async def perform_mouse_click_action(action: str):
     if action == "mouse_click_left":
         function = lambda: pyautogui.mouseDown(button="left")
-    if action == "mouse_release_left":
+    elif action == "mouse_release_left":
         function = lambda: pyautogui.mouseUp(button="left")
-    if action == "mouse_click_right":
+    elif action == "mouse_click_right":
         function = lambda: pyautogui.mouseDown(button="right")
-    if action == "mouse_release_right":
+    elif action == "mouse_release_right":
         function = lambda: pyautogui.mouseUp(button="right")
-    if action == "mouse_click_middle":
+    elif action == "mouse_click_middle":
         function = lambda: pyautogui.click(button="middle")
     else:
         return
