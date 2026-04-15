@@ -10,3 +10,11 @@ A powerful and flexible MIDI controller mapping system that converts MIDI inputs
 ---
 
 Made with ❤️ by [Ivole32](https://github.com/Ivole32)
+
+## Disclaimer
+
+This project is not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft.
+
+Minecraft is a trademark of Mojang Studios. This software is an independent project and is not an official Minecraft product.
+
+This software is designed to be used in various contexts and is not limited to Minecraft-related use cases.
