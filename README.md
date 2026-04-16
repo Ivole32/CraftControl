@@ -1,6 +1,16 @@
 # CraftControl - MIDI to Keyboard/Mouse Mapper
 
-A powerful and flexible MIDI controller mapping system that converts MIDI inputs from DJ controllers (like the DDJ FLEX4) into keyboard shortcuts and mouse movements. Perfect for controlling games, software, or any application with your DJ controller!
+A powerful and flexible MIDI controller mapping system that converts MIDI inputs from DJ controllers (like the DDJ FLEX4) into keyboard shortcuts and mouse movements. Perfect for controlling games, software, or any application like Mineraft with your DJ controller!
+
+A full documentation can be found [here](https://github.com/Ivole32/CraftControl/wiki)
+
+## 🚀 Quickstart
+### EXE
+To download the latest release, go to the [latest release page](https://github.com/Ivole32/CraftControl/releases/latest).
+
+### Build it yourself
+Simply run `build_exe.ps1` in the repo root. The finished EXE file should be in `/dist`.
+Please make sure you have Python installed and are using Windows before trying to build the file.
 
 ## 💬 Support
 
