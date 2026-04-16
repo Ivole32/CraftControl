@@ -21,6 +21,13 @@ Please make sure you have Python installed and are using Windows before trying t
 
 Made with ❤️ by [Ivole32](https://github.com/Ivole32)
 
+## AI-Declaration
+Used AI to:
+    - ONLY correct spelling mistakes in devlogs and documentation
+    - Pack the project into an EXE file
+    - Find the mouse handling code in the Minecraft source code (=> for better implementation)
+    - Fix 1 tricky bug that cost me more than 1.5 hours
+
 ## Disclaimer
 
 This project is not affiliated with, endorsed by, or associated with Mojang Studios or Microsoft.
