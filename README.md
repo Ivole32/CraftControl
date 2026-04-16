@@ -26,10 +26,10 @@ Made with ❤️ by [Ivole32](https://github.com/Ivole32)
 
 ## AI-Declaration
 Used AI to:
-    - ONLY correct spelling mistakes in devlogs and documentation
-    - Pack the project into an EXE file
-    - Find the mouse handling code in the Minecraft source code (=> for better implementation)
-    - Fix 1 tricky bug that cost me more than 1.5 hours
+- ONLY correct spelling mistakes in devlogs and documentation
+- Pack the project into an EXE file
+- Find the mouse handling code in the Minecraft source code (=> for better implementation)
+- Fix 1 tricky bug that cost me more than 1.5 hours
 
 ## Disclaimer
 
