@@ -12,6 +12,9 @@ To download the latest release, go to the [latest release page](https://github.c
 Simply run `build_exe.ps1` in the repo root. The finished EXE file should be in `/dist`.
 Please make sure you have Python installed and are using Windows before trying to build the file.
 
+### Binding Layout
+![Binding Layout](https://raw.githubusercontent.com/Ivole32/CraftControl/refs/heads/main/wiki/Layout.png)
+
 ## 💬 Support
 
 - **Issues:** [GitHub Issues](https://github.com/Ivole32/CraftControl/issues)
