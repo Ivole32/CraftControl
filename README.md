@@ -5,7 +5,7 @@ A powerful and flexible MIDI controller mapping system that converts MIDI inputs
 A full documentation can be found [here](https://github.com/Ivole32/CraftControl/wiki)
 
 ## Video of usage
-![Video](https://raw.githubusercontent.com/Ivole32/CraftControl/refs/heads/main/wiki/thumbnail.png)(https://raw.githubusercontent.com/Ivole32/CraftControl/refs/heads/main/wiki/video.mp4)
+[![Video](https://raw.githubusercontent.com/Ivole32/CraftControl/refs/heads/main/wiki/thumbnail.png)](https://raw.githubusercontent.com/Ivole32/CraftControl/refs/heads/main/wiki/video.mp4)
 
 ## 🚀 Quickstart
 ### EXE
