@@ -26,6 +26,8 @@ You can safely ignore `time`.
 ### Keyboard Bindings
 To add keyboard bindings, you have to press the button on your MIDI controller you want to select and look in the log which message values it has. Then you need to paste those into the keyboard tab, add an action key, and press "Add". If you want to use the jog wheels for WASD, you have to specify the value. But for other keybinds, you may not need that.
 
+Please note that you can use shortcuts. You can read the documentation for that [here](https://github.com/boppreh/keyboard#keyboardsendhotkey-do_presstrue-do_releasetrue) (The documentation is a bit confusing but you'll understand it.)
+
 ### Mouse Bindings
 
 #### **Movement**
