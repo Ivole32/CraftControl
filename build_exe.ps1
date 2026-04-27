@@ -1,3 +1,7 @@
+param(
+    [string]$version = "1.0.1"
+)
+
 $ErrorActionPreference = "Stop"
 
 $projectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -16,7 +20,7 @@ if (-not $python) {
     --clean `
     --onefile `
     --windowed `
-    --name CraftControl `
+    --name "CraftControl_v$version" `
     --add-data "config.json;." `
     --hidden-import mido `
     --hidden-import mido.backends.rtmidi `
@@ -24,4 +28,4 @@ if (-not $python) {
     --collect-submodules mido `
     main.py
 
-Write-Host "Build done. EXE is in: $projectRoot\dist\CraftControl.exe"
+Write-Host "Build done. EXE is in: $projectRoot\dist\CraftControl_v$version.exe"
