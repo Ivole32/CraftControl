@@ -91,9 +91,27 @@ class MidiMonitorApp(ctk.CTk):
             row=0, column=0, padx=12, pady=(12, 6), sticky="w"
         )
 
-        self.monitor_text = ctk.CTkTextbox(monitor_frame, wrap="none")
-        self.monitor_text.grid(row=1, column=0, padx=12, pady=(0, 12), sticky="nsew")
-        self.monitor_text.configure(state="disabled")
+        text_frame = ctk.CTkFrame(monitor_frame)
+        text_frame.grid(row=1, column=0, padx=12, pady=(0, 12), sticky="nsew")
+        text_frame.grid_rowconfigure(0, weight=1)
+        text_frame.grid_columnconfigure(0, weight=1)
+
+        self.monitor_text = tk.Text(text_frame, wrap="none", bg="#212121", fg="#e0e0e0", font=("monospace", 10))
+        self.monitor_text.grid(row=0, column=0, sticky="nsew")
+        
+        scrollbar = ctk.CTkScrollbar(text_frame, command=self.monitor_text.yview)
+        scrollbar.grid(row=0, column=1, sticky="ns")
+        self.monitor_text.configure(yscrollcommand=scrollbar.set)
+
+        self.monitor_text.tag_configure("midi_message", foreground="#64b5f6", underline=False)
+        self.monitor_text.tag_configure("midi_message_hover", foreground="#42a5f5", underline=True, background="#333333")
+
+        self.monitor_text.tag_bind("midi_message", "<Enter>", self._on_message_hover)
+        self.monitor_text.tag_bind("midi_message", "<Leave>", self._on_message_leave)
+        self.monitor_text.tag_bind("midi_message", "<Button-1>", self._on_message_click)
+        
+        self.last_hovered_message = None
+        self.message_data = {}
 
         bindings_frame = ctk.CTkFrame(self)
         bindings_frame.grid(row=1, column=1, padx=(6, 12), pady=(6, 12), sticky="nsew")
@@ -370,11 +388,129 @@ class MidiMonitorApp(ctk.CTk):
         except queue.Full:
             pass
 
+    def _parse_midi_message(self, msg_str):
+        msg_str = msg_str.strip()
+        data = {}
+
+        parts = msg_str.split()
+        if not parts:
+            return None
+        
+        msg_type = parts[0]
+        data["msg_type"] = msg_type
+
+        for part in parts[1:]:
+            if "=" in part:
+                key, value = part.split("=", 1)
+                try:
+                    data[key] = int(value)
+                except ValueError:
+                    data[key] = value
+        
+        if msg_type.startswith("note"):
+            if "note" in data and "channel" in data:
+                return data
+        elif msg_type == "control_change":
+            if "control" in data and "channel" in data:
+                data["key"] = data["control"]
+                return data
+        
+        return None
+
+    def _on_message_hover(self, event):
+        if self.last_hovered_message:
+            self.monitor_text.tag_remove("midi_message_hover", self.last_hovered_message, f"{self.last_hovered_message} lineend")
+        
+        index = self.monitor_text.index(f"@{event.x},{event.y}")
+        line_start = f"{index} linestart"
+        line_end = f"{index} lineend"
+        
+        self.monitor_text.tag_add("midi_message_hover", line_start, line_end)
+        self.last_hovered_message = line_start
+
+    def _on_message_leave(self, event):
+        if self.last_hovered_message:
+            self.monitor_text.tag_remove("midi_message_hover", self.last_hovered_message, f"{self.last_hovered_message} lineend")
+            self.last_hovered_message = None
+
+    def _on_message_click(self, event):
+        index = self.monitor_text.index(f"@{event.x},{event.y}")
+        line_start = f"{index} linestart"
+        line_end = f"{index} lineend"
+        
+        message_text = self.monitor_text.get(line_start, line_end)
+        parsed = self._parse_midi_message(message_text)
+        
+        if parsed:
+            self._show_quick_binding_dialog(parsed, message_text)
+
+    def _show_quick_binding_dialog(self, parsed_data, original_message):
+        dialog = ctk.CTkToplevel(self)
+        dialog.title("Create Binding from Message")
+        dialog.geometry("400x250")
+        dialog.resizable(False, False)
+        
+        dialog.transient(self)
+        dialog.grab_set()
+        
+        ctk.CTkLabel(dialog, text="Create Keyboard Binding", font=ctk.CTkFont(size=14, weight="bold")).pack(padx=12, pady=(12, 6), anchor="w")
+
+        ctk.CTkLabel(dialog, text=f"Message: {original_message}", text_color="#888", wraplength=350).pack(padx=12, pady=(0, 12), anchor="w")
+
+        ctk.CTkLabel(dialog, text="Action Key:").pack(padx=12, pady=(6, 3), anchor="w")
+        keyboard_action_entry = ctk.CTkEntry(dialog, placeholder_text="e.g. space, a, ctrl+s")
+        keyboard_action_entry.insert(0, "space")
+        keyboard_action_entry.pack(padx=12, pady=(0, 12), anchor="w", fill="x", expand=False)
+
+        button_frame = ctk.CTkFrame(dialog, fg_color="transparent")
+        button_frame.pack(padx=12, pady=(12, 12), anchor="e")
+        
+        ctk.CTkButton(button_frame, text="Cancel", width=80, command=dialog.destroy).pack(side="left", padx=4)
+        ctk.CTkButton(button_frame, text="Create", width=80, 
+                     command=lambda: self._create_binding_from_dialog(parsed_data, dialog, keyboard_action_entry)).pack(side="left", padx=4)
+    
+    def _create_binding_from_dialog(self, parsed_data, dialog, keyboard_action_entry):
+        try:
+            action = keyboard_action_entry.get().strip()
+            if not action:
+                raise ValueError("Action cannot be empty")
+            
+            binding = {
+                "msg_type": parsed_data.get("msg_type"),
+                "key": parsed_data.get("key") or parsed_data.get("note"),
+                "channel": parsed_data.get("channel"),
+                "value": parsed_data.get("velocity") or parsed_data.get("value"),
+                "action": action
+            }
+            self.config["keyboard_bindings"].append(binding)
+            binding_desc = f"{binding['msg_type']} key={binding['key']} ch={binding['channel']} val={binding['value']} -> {action}"
+            
+            self._refresh_keyboard_bind_list()
+            self._save_config()
+            self._rebuild_router_if_running()
+            self._queue_log(f"Created binding: {binding_desc}")
+            dialog.destroy()
+            messagebox.showinfo("Success", f"Binding created:\n{binding_desc}")
+        
+        except Exception as error:
+            messagebox.showerror("Error", f"Failed to create binding: {error}")
+
     def _drain_log_queue(self):
         self.monitor_text.configure(state="normal")
         while not self.log_queue.empty():
             message = self.log_queue.get_nowait()
+            
+            insert_pos = self.monitor_text.index("end - 1 chars")
+            line_num = insert_pos.split(".")[0]
+
             self.monitor_text.insert("end", f"{message}\n")
+
+            parsed = self._parse_midi_message(message)
+            if parsed:
+                line_start = f"{line_num}.0"
+                line_end = f"{line_num}.end"
+                self.monitor_text.tag_add("midi_message", line_start, line_end)
+        
         self.monitor_text.see("end")
         self.monitor_text.configure(state="disabled")
         self.after(100, self._drain_log_queue)
