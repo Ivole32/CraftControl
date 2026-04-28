@@ -15,7 +15,6 @@ class MidiRouter:
 
     def register_mouse_binding(self, msg_type, keys: tuple, channel, value, action, func):
         self.mouse_key_combinations.append(keys)
-        print(self.mouse_key_combinations)
         if value == None:
             for key in keys:
                 self.mouse_routes[(msg_type, key, channel)] = [func, action]
@@ -49,7 +48,6 @@ class MidiRouter:
         elif mouse_route:
             click_action = False
             self.mouse_cache[key] = value
-            print(self.mouse_cache)
 
             for key_1, key_2 in self.mouse_key_combinations:
                 if key_1 in self.mouse_cache and key_2 in self.mouse_cache:
