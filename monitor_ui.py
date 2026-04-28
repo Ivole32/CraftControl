@@ -106,8 +106,8 @@ class MidiMonitorApp(ctk.CTk):
         self.monitor_text.tag_configure("midi_message", foreground="#64b5f6", underline=False)
         self.monitor_text.tag_configure("midi_message_hover", foreground="#42a5f5", underline=True, background="#333333")
 
-        self.monitor_text.tag_bind("midi_message", "<Enter>", self._on_message_hover)
-        self.monitor_text.tag_bind("midi_message", "<Leave>", self._on_message_leave)
+        self.monitor_text.bind("<Motion>", self._on_message_hover)
+        self.monitor_text.bind("<Leave>", self._on_message_leave)
         self.monitor_text.tag_bind("midi_message", "<Button-1>", self._on_message_click)
         
         self.last_hovered_message = None
@@ -418,13 +418,24 @@ class MidiMonitorApp(ctk.CTk):
         return None
 
     def _on_message_hover(self, event):
-        if self.last_hovered_message:
-            self.monitor_text.tag_remove("midi_message_hover", self.last_hovered_message, f"{self.last_hovered_message} lineend")
-        
         index = self.monitor_text.index(f"@{event.x},{event.y}")
+        if "midi_message" not in self.monitor_text.tag_names(index):
+            if self.last_hovered_message:
+                self.monitor_text.tag_remove(
+                    "midi_messahe_hover", self.last_hovered_message, f"{self.last_hovered_message} lineend"
+                )
+                self.last_hovered_message = None
+            return
+
         line_start = f"{index} linestart"
         line_end = f"{index} lineend"
         
+        if self.last_hovered_message == line_start:
+            return
+        
+        if self.last_hovered_message:
+            self.monitor_text.tag_remove("midi_message_hover", self.last_hovered_message, f"{self.last_hovered_message} lineend")
+
         self.monitor_text.tag_add("midi_message_hover", line_start, line_end)
         self.last_hovered_message = line_start
 
@@ -497,6 +508,9 @@ class MidiMonitorApp(ctk.CTk):
 
     def _drain_log_queue(self):
         self.monitor_text.configure(state="normal")
+
+        auto_scroll = self.monitor_text.yview()[1] >= 0.99
+
         while not self.log_queue.empty():
             message = self.log_queue.get_nowait()
             
@@ -510,8 +524,8 @@ class MidiMonitorApp(ctk.CTk):
                 line_start = f"{line_num}.0"
                 line_end = f"{line_num}.end"
                 self.monitor_text.tag_add("midi_message", line_start, line_end)
-        
-        self.monitor_text.see("end")
+        if auto_scroll:
+            self.monitor_text.see("end")
         self.monitor_text.configure(state="disabled")
         self.after(100, self._drain_log_queue)
 
