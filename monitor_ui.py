@@ -422,7 +422,7 @@ class MidiMonitorApp(ctk.CTk):
         if "midi_message" not in self.monitor_text.tag_names(index):
             if self.last_hovered_message:
                 self.monitor_text.tag_remove(
-                    "midi_messahe_hover", self.last_hovered_message, f"{self.last_hovered_message} lineend"
+                    "midi_message_hover", self.last_hovered_message, f"{self.last_hovered_message} lineend"
                 )
                 self.last_hovered_message = None
             return
