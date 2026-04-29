@@ -23,6 +23,12 @@ Next is `value` or `velocity`, which both stand for the value the MIDI controlle
 
 You can safely ignore `time`.
 
+### Auto Mapping
+The project supports limited auto mapping for keyboard actions. When you click on the MIDI message you want to create a keybind for, a new window will open where you can specify the button you want to use. <br>
+=> See `Keyboard Bindings` on how keyboard actions and shortcuts work.
+
+**Note:** The auto mapping feature is currently only available for keyboard actions, as they only need one MIDI message to trigger. Support for mouse actions may be added later.
+
 ### Keyboard Bindings
 To add keyboard bindings, you have to press the button on your MIDI controller you want to select and look in the log which message values it has. Then you need to paste those into the keyboard tab, add an action key, and press "Add". If you want to use the jog wheels for WASD, you have to specify the value. But for other keybinds, you may not need that.
 
